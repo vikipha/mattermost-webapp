@@ -165,15 +165,6 @@ export default class Textbox extends React.Component {
     }
 
     UNSAFE_componentWillReceiveProps(nextProps) { // eslint-disable-line camelcase
-        if (nextProps.channelId !== this.props.channelId) {
-            // Update channel id for AtMentionProvider.
-            const providers = this.suggestionProviders;
-            for (let i = 0; i < providers.length; i++) {
-                if (providers[i] instanceof AtMentionProvider) {
-                    providers[i] = new AtMentionProvider(nextProps.channelId);
-                }
-            }
-        }
         if (this.props.value !== nextProps.value) {
             this.checkMessageLength(nextProps.value);
         }
