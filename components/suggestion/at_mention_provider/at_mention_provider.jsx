@@ -9,18 +9,18 @@ import AppDispatcher from 'dispatcher/app_dispatcher.jsx';
 import {ActionTypes, Constants} from 'utils/constants.jsx';
 import SuggestionStore from 'stores/suggestion_store.jsx';
 
-import ProviderComponent from '../provider_component.jsx';
+import Provider from '../provider.jsx';
 import AtMentionSuggestion from './at_mention_suggestion.jsx';
 
-export default class AtMentionProvider extends ProviderComponent {
-    static propTypes = {
-        currentUserId: PropTypes.string.isRequired,
-        currentTeamId: PropTypes.string.isRequired,
-        currentChannelId: PropTypes.string.isRequired,
-        profilesInCurrentChannel: PropTypes.arrayOf(PropTypes.object).isRequired,
-        actions: PropTypes.shape({
-            autocompleteUsers: PropTypes.func.isRequired,
-        }),
+export default class AtMentionProvider extends Provider {
+    constructor({currentChannelId, currentUserId, currentTeamId, profilesInCurrentChannel, autocompleteUsers}) {
+        super();
+
+        this.currentChannelId = currentChannelId;
+        this.currentUserId = currentUserId;
+        this.currentTeamId = currentTeamId;
+        this.profilesInCurrentChannel = profilesInCurrentChannel;
+        this.autocompleteUsers = autocompleteUsers;
     }
 
     handlePretextChanged(suggestionId, pretext) {
@@ -42,11 +42,9 @@ export default class AtMentionProvider extends ProviderComponent {
             type: Constants.MENTION_SPECIAL,
         }));
 
-        console.log(state);
-
         const prefixLower = prefix.toLowerCase();
-        const localMembers = this.props.profilesInCurrentChannel.
-            filter((item) => item.id !== this.props.currentUserId).
+        const localMembers = this.profilesInCurrentChannel.
+            filter((item) => item.id !== this.currentUserId).
             filter((item) =>
                 (item.username && item.username.toLowerCase().startsWith(prefixLower)) ||
                 (item.first_name && item.first_name.toLowerCase().startsWith(prefixLower)) ||
@@ -82,10 +80,10 @@ export default class AtMentionProvider extends ProviderComponent {
             component: AtMentionSuggestion,
         }), 0);
 
-        this.props.actions.autocompleteUsers(
+        this.autocompleteUsers(
             prefix,
-            this.props.currentTeamId,
-            this.props.currentChannelId
+            this.currentTeamId,
+            this.currentChannelId
         ).then((data) => {
             if (this.shouldCancelDispatch(prefix)) {
                 return;
@@ -100,7 +98,7 @@ export default class AtMentionProvider extends ProviderComponent {
             })).filter((user) =>
                 !localUserIds[user.id]
             ).filter((user) =>
-                user.id !== this.props.currentUserId
+                user.id !== this.currentUserId
             );
 
             const members = localMembers.concat(remoteMembers).sort((a, b) =>

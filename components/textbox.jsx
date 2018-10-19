@@ -40,6 +40,12 @@ export default class Textbox extends React.Component {
         popoverMentionKeyClick: PropTypes.bool,
         characterLimit: PropTypes.number.isRequired,
         disabled: PropTypes.bool,
+        currentTeamId: PropTypes.string.isRequired,
+        currentUserId: PropTypes.string.isRequired,
+        profilesInChannel: PropTypes.arrayOf(PropTypes.object).isRequired,
+        actions: PropTypes.shape({
+            autocompleteUsers: PropTypes.func.isRequired,
+        }),
     };
 
     static defaultProps = {
@@ -165,6 +171,21 @@ export default class Textbox extends React.Component {
     }
 
     UNSAFE_componentWillReceiveProps(nextProps) { // eslint-disable-line camelcase
+        if (nextProps.channelId !== this.props.channelId) {
+            // Update channel id for AtMentionProvider.
+            const providers = this.suggestionProviders;
+            for (let i = 0; i < providers.length; i++) {
+                if (providers[i] instanceof AtMentionProvider) {
+                    providers[i] = new AtMentionProvider({
+                        currentChannelId: nextProps.channelId,
+                        currentTeamId: nextProps.currentTeamId,
+                        currentUserId: nextProps.currentUserId,
+                        profilesInChannel: nextProps.profilesInChannel,
+                        autocompleteUsers: nextProps.actions.autocompleteUsers,
+                    );
+                }
+            }
+        }
         if (this.props.value !== nextProps.value) {
             this.checkMessageLength(nextProps.value);
         }
