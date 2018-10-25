@@ -2,8 +2,12 @@
 // See LICENSE.txt for license information.
 
 import {connect} from 'react-redux';
+import {bindActionCreators} from 'redux';
+
 import {getConfig, getLicense} from 'mattermost-redux/selectors/entities/general';
 import {RequestStatus} from 'mattermost-redux/constants';
+
+import {login} from 'actions/views/login';
 
 import LoginController from './login_controller.jsx';
 
@@ -53,4 +57,12 @@ function mapStateToProps(state) {
     };
 }
 
-export default connect(mapStateToProps)(LoginController);
+function mapDispatchToProps(dispatch) {
+    return {
+        actions: bindActionCreators({
+            login,
+        }, dispatch),
+    };
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(LoginController);
