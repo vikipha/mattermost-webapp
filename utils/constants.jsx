@@ -213,7 +213,6 @@ export const ActionTypes = keyMirror({
 
     TOGGLE_SHORTCUTS_MODAL: null,
     TOGGLE_IMPORT_THEME_MODAL: null,
-    TOGGLE_INVITE_MEMBER_MODAL: null,
     TOGGLE_DELETE_POST_MODAL: null,
     TOGGLE_GET_POST_LINK_MODAL: null,
     TOGGLE_GET_TEAM_INVITE_LINK_MODAL: null,
@@ -282,6 +281,7 @@ export const ModalIdentifiers = {
     RESET_STATUS: 'reset_status',
     LEAVE_TEAM: 'leave_team',
     USER_SETTINGS: 'user_settings',
+    EMAIL_INVITE: 'email_invite',
 };
 
 export const UserStatuses = {
