@@ -174,8 +174,7 @@ export default class Textbox extends React.Component {
         if (nextProps.channelId !== this.props.channelId ||
             nextProps.currentTeamId !== this.props.currentTeamId ||
             nextProps.currentUserId !== this.props.currentUserId ||
-            nextProps.profilesInChannel !== this.props.profilesInChannel ||
-            nextProps.autocompleteUsers !== this.props.autocompleteUsers) {
+            nextProps.profilesInChannel !== this.props.profilesInChannel) {
             // Update channel id for AtMentionProvider.
             const providers = this.suggestionProviders;
             for (let i = 0; i < providers.length; i++) {

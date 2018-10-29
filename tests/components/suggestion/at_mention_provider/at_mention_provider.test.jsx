@@ -1,11 +1,6 @@
 // Copyright (c) 2015-present Mattermost, Inc. All Rights Reserved.
 // See LICENSE.txt for license information.
 
-import React from 'react';
-import {mount} from 'enzyme';
-import configureStore from 'redux-mock-store';
-import thunk from 'redux-thunk';
-
 import {ActionTypes, Constants} from 'utils/constants.jsx';
 import AtMentionProvider from 'components/suggestion/at_mention_provider/at_mention_provider.jsx';
 import AtMentionSuggestion from 'components/suggestion/at_mention_provider/at_mention_suggestion.jsx';
@@ -47,11 +42,11 @@ describe('components/suggestion/at_mention_provider/AtMentionProvider', function
     });
 
     it('should suggest for "@"', (done) => {
-        const pretext = "@";
-        const matchedPretext = "@";
+        const pretext = '@';
+        const matchedPretext = '@';
         const params = {
             ...baseParams,
-            autocompleteUsers: jest.fn().mockImplementation(() => new Promise((resolve, reject) => {
+            autocompleteUsers: jest.fn().mockImplementation(() => new Promise((resolve) => {
                 setTimeout(() => resolve({
                     users: [
                         {id: 'userid4', username: 'user4', first_name: 'X', last_name: 'Y', nickname: 'Z'},
@@ -201,11 +196,11 @@ describe('components/suggestion/at_mention_provider/AtMentionProvider', function
     });
 
     it('should suggest for "@h"', (done) => {
-        const pretext = "@h";
-        const matchedPretext = "@h";
+        const pretext = '@h';
+        const matchedPretext = '@h';
         const params = {
             ...baseParams,
-            autocompleteUsers: jest.fn().mockImplementation(() => new Promise((resolve, reject) => {
+            autocompleteUsers: jest.fn().mockImplementation(() => new Promise((resolve) => {
                 setTimeout(() => resolve({
                     users: [],
                     out_of_channel: [],
@@ -259,11 +254,11 @@ describe('components/suggestion/at_mention_provider/AtMentionProvider', function
     });
 
     it('should suggest for username match "@user"', (done) => {
-        const pretext = "@user";
-        const matchedPretext = "@user";
+        const pretext = '@user';
+        const matchedPretext = '@user';
         const params = {
             ...baseParams,
-            autocompleteUsers: jest.fn().mockImplementation(() => new Promise((resolve, reject) => {
+            autocompleteUsers: jest.fn().mockImplementation(() => new Promise((resolve) => {
                 setTimeout(() => resolve({
                     users: [
                         {id: 'userid4', username: 'user4', first_name: 'X', last_name: 'Y', nickname: 'Z'},
@@ -348,10 +343,10 @@ describe('components/suggestion/at_mention_provider/AtMentionProvider', function
 
     it('should suggest for first_name match "@X"', (done) => {
         const pretext = '@X';
-        const matchedPretext = "@x";
+        const matchedPretext = '@x';
         const params = {
             ...baseParams,
-            autocompleteUsers: jest.fn().mockImplementation(() => new Promise((resolve, reject) => {
+            autocompleteUsers: jest.fn().mockImplementation(() => new Promise((resolve) => {
                 setTimeout(() => resolve({
                     users: [
                         {id: 'userid4', username: 'user4', first_name: 'X', last_name: 'Y', nickname: 'Z'},
@@ -425,10 +420,10 @@ describe('components/suggestion/at_mention_provider/AtMentionProvider', function
 
     it('should suggest for last_name match "@Y"', (done) => {
         const pretext = '@Y';
-        const matchedPretext = "@y";
+        const matchedPretext = '@y';
         const params = {
             ...baseParams,
-            autocompleteUsers: jest.fn().mockImplementation(() => new Promise((resolve, reject) => {
+            autocompleteUsers: jest.fn().mockImplementation(() => new Promise((resolve) => {
                 setTimeout(() => resolve({
                     users: [
                         {id: 'userid4', username: 'user4', first_name: 'X', last_name: 'Y', nickname: 'Z'},
@@ -502,10 +497,10 @@ describe('components/suggestion/at_mention_provider/AtMentionProvider', function
 
     it('should suggest for nickname match "@Z"', (done) => {
         const pretext = '@Z';
-        const matchedPretext = "@z";
+        const matchedPretext = '@z';
         const params = {
             ...baseParams,
-            autocompleteUsers: jest.fn().mockImplementation(() => new Promise((resolve, reject) => {
+            autocompleteUsers: jest.fn().mockImplementation(() => new Promise((resolve) => {
                 setTimeout(() => resolve({
                     users: [
                         {id: 'userid4', username: 'user4', first_name: 'X', last_name: 'Y', nickname: 'Z'},
@@ -596,11 +591,11 @@ describe('components/suggestion/at_mention_provider/AtMentionProvider', function
     });
 
     it('should suggest ignore out_of_channel if found locally', (done) => {
-        const pretext = "@user";
-        const matchedPretext = "@user";
+        const pretext = '@user';
+        const matchedPretext = '@user';
         const params = {
             ...baseParams,
-            autocompleteUsers: jest.fn().mockImplementation(() => new Promise((resolve, reject) => {
+            autocompleteUsers: jest.fn().mockImplementation(() => new Promise((resolve) => {
                 setTimeout(() => resolve({
                     users: [
                         {id: 'userid4', username: 'user4', first_name: 'X', last_name: 'Y', nickname: 'Z'},

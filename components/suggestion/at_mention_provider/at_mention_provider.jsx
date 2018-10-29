@@ -1,15 +1,14 @@
 // Copyright (c) 2015-present Mattermost, Inc. All Rights Reserved.
 // See LICENSE.txt for license information.
 
-import React from 'react';
 import XRegExp from 'xregexp';
-import PropTypes from 'prop-types';
 
 import AppDispatcher from 'dispatcher/app_dispatcher.jsx';
 import {ActionTypes, Constants} from 'utils/constants.jsx';
 import SuggestionStore from 'stores/suggestion_store.jsx';
 
 import Provider from '../provider.jsx';
+
 import AtMentionSuggestion from './at_mention_suggestion.jsx';
 
 export default class AtMentionProvider extends Provider {
@@ -27,9 +26,8 @@ export default class AtMentionProvider extends Provider {
         const mentions = users.map((user) => {
             if (user.username) {
                 return '@' + user.username;
-            } else {
-                return '';
             }
+            return '';
         });
 
         AppDispatcher.handleServerAction({
