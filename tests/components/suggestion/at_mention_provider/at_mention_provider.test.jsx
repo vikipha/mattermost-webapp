@@ -594,4 +594,93 @@ describe('components/suggestion/at_mention_provider/AtMentionProvider', function
             done();
         }, 50);
     });
+
+    it('should suggest ignore out_of_channel if found locally', (done) => {
+        const pretext = "@user";
+        const matchedPretext = "@user";
+        const params = {
+            ...baseParams,
+            autocompleteUsers: jest.fn().mockImplementation(() => new Promise((resolve, reject) => {
+                setTimeout(() => resolve({
+                    users: [
+                        {id: 'userid4', username: 'user4', first_name: 'X', last_name: 'Y', nickname: 'Z'},
+                    ],
+                    out_of_channel: [
+                        {id: 'userid2', username: 'user2', first_name: 'd', last_name: 'e', nickname: 'f'},
+                        {id: 'userid5', username: 'user5', first_name: 'out', last_name: 'out', nickname: 'out'},
+                    ],
+                }), 0);
+            })),
+        };
+
+        const provider = new AtMentionProvider(params);
+        expect(provider.handlePretextChanged(suggestionId, pretext)).toEqual(true);
+
+        setTimeout(() => {
+            expect(AppDispatcher.handleServerAction).toHaveBeenNthCalledWith(1, {
+                type: ActionTypes.SUGGESTION_RECEIVED_SUGGESTIONS,
+                id: suggestionId,
+                matchedPretext,
+                terms: [
+                    '@user2',
+                    '',
+                ],
+                items: [
+                    {
+                        type: Constants.MENTION_MEMBERS,
+                        id: 'userid2',
+                        username: 'user2',
+                        first_name: 'd',
+                        last_name: 'e',
+                        nickname: 'f',
+                    },
+                    {
+                        type: Constants.MENTION_MORE_MEMBERS,
+                        loading: true,
+                    },
+                ],
+                component: AtMentionSuggestion,
+            });
+
+            expect(AppDispatcher.handleServerAction).toHaveBeenNthCalledWith(2, {
+                type: ActionTypes.SUGGESTION_RECEIVED_SUGGESTIONS,
+                id: suggestionId,
+                matchedPretext,
+                terms: [
+                    '@user2',
+                    '@user4',
+                    '@user5',
+                ],
+                items: [
+                    {
+                        type: Constants.MENTION_MEMBERS,
+                        id: 'userid2',
+                        username: 'user2',
+                        first_name: 'd',
+                        last_name: 'e',
+                        nickname: 'f',
+                    },
+                    {
+                        type: Constants.MENTION_MEMBERS,
+                        id: 'userid4',
+                        username: 'user4',
+                        first_name: 'X',
+                        last_name: 'Y',
+                        nickname: 'Z',
+                    },
+                    {
+                        type: Constants.MENTION_NONMEMBERS,
+                        id: 'userid5',
+                        username: 'user5',
+                        first_name: 'out',
+                        last_name: 'out',
+                        nickname: 'out',
+                    },
+                ],
+                component: AtMentionSuggestion,
+            });
+
+            done();
+        }, 50);
+    });
 });

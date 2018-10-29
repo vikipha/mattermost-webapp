@@ -132,7 +132,9 @@ export default class AtMentionProvider extends Provider {
             const remoteNonMembers = (data.out_of_channel || []).map((user) => ({
                 type: Constants.MENTION_NONMEMBERS,
                 ...user,
-            }));
+            })).filter((user) =>
+                !localUserIds[user.id]
+            );
 
             // Piece everything together for the suggestion store.
             this.updateMatches(
