@@ -12,14 +12,12 @@ import Provider from '../provider.jsx';
 import AtMentionSuggestion from './at_mention_suggestion.jsx';
 
 export default class AtMentionProvider extends Provider {
-    constructor({currentChannelId, currentUserId, currentTeamId, profilesInChannel, autocompleteUsers}) {
+    constructor({currentUserId, profilesInChannel, autocompleteUsersInChannel}) {
         super();
 
-        this.currentChannelId = currentChannelId;
         this.currentUserId = currentUserId;
-        this.currentTeamId = currentTeamId;
         this.profilesInChannel = profilesInChannel;
-        this.autocompleteUsers = autocompleteUsers;
+        this.autocompleteUsersInChannel = autocompleteUsersInChannel;
     }
 
     updateMatches(suggestionId, prefix, users) {
@@ -99,7 +97,7 @@ export default class AtMentionProvider extends Provider {
         ), 0);
 
         // Query the server for remote results to add to the local results extracted above.
-        this.autocompleteUsers(prefix, this.currentTeamId, this.currentChannelId).then(({data}) => {
+        this.autocompleteUsersInChannel(prefix).then(({data}) => {
             if (this.shouldCancelDispatch(prefix)) {
                 return;
             }

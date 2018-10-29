@@ -40,11 +40,10 @@ export default class Textbox extends React.Component {
         popoverMentionKeyClick: PropTypes.bool,
         characterLimit: PropTypes.number.isRequired,
         disabled: PropTypes.bool,
-        currentTeamId: PropTypes.string.isRequired,
         currentUserId: PropTypes.string.isRequired,
         profilesInChannel: PropTypes.arrayOf(PropTypes.object).isRequired,
         actions: PropTypes.shape({
-            autocompleteUsers: PropTypes.func.isRequired,
+            autocompleteUsersInChannel: PropTypes.func.isRequired,
         }),
     };
 
@@ -63,11 +62,9 @@ export default class Textbox extends React.Component {
 
         this.suggestionProviders = [
             new AtMentionProvider({
-                currentChannelId: this.props.channelId,
-                currentTeamId: this.props.currentTeamId,
                 currentUserId: this.props.currentUserId,
                 profilesInChannel: this.props.profilesInChannel,
-                autocompleteUsers: this.props.actions.autocompleteUsers,
+                autocompleteUsersInChannel: this.props.actions.autocompleteUsersInChannel,
             }),
             new ChannelMentionProvider(),
             new EmoticonProvider(),
@@ -178,7 +175,6 @@ export default class Textbox extends React.Component {
 
     UNSAFE_componentWillReceiveProps(nextProps) { // eslint-disable-line camelcase
         if (nextProps.channelId !== this.props.channelId ||
-            nextProps.currentTeamId !== this.props.currentTeamId ||
             nextProps.currentUserId !== this.props.currentUserId ||
             nextProps.profilesInChannel !== this.props.profilesInChannel) {
             // Update channel id for AtMentionProvider.
@@ -186,11 +182,9 @@ export default class Textbox extends React.Component {
             for (let i = 0; i < providers.length; i++) {
                 if (providers[i] instanceof AtMentionProvider) {
                     providers[i] = new AtMentionProvider({
-                        currentChannelId: nextProps.channelId,
-                        currentTeamId: nextProps.currentTeamId,
                         currentUserId: nextProps.currentUserId,
                         profilesInChannel: nextProps.profilesInChannel,
-                        autocompleteUsers: nextProps.actions.autocompleteUsers,
+                        autocompleteUsersInChannel: nextProps.actions.autocompleteUsersInChannel,
                     });
                 }
             }
