@@ -12,7 +12,7 @@ import * as Utils from 'utils/utils.jsx';
 import DeletePostModal from 'components/delete_post_modal';
 import EmojiPickerOverlay from 'components/emoji_picker/emoji_picker_overlay.jsx';
 import EmojiIcon from 'components/svg/emoji_icon';
-import Textbox from 'components/textbox.jsx';
+import Textbox from 'components/textbox';
 
 const KeyCodes = Constants.KeyCodes;
 

@@ -62,7 +62,13 @@ export default class Textbox extends React.Component {
         };
 
         this.suggestionProviders = [
-            new AtMentionProvider(this.props.channelId),
+            new AtMentionProvider({
+                currentChannelId: this.props.channelId,
+                currentTeamId: this.props.currentTeamId,
+                currentUserId: this.props.currentUserId,
+                profilesInChannel: this.props.profilesInChannel,
+                autocompleteUsers: this.props.actions.autocompleteUsers,
+            }),
             new ChannelMentionProvider(),
             new EmoticonProvider(),
         ];

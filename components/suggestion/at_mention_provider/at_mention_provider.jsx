@@ -12,13 +12,13 @@ import Provider from '../provider.jsx';
 import AtMentionSuggestion from './at_mention_suggestion.jsx';
 
 export default class AtMentionProvider extends Provider {
-    constructor({currentChannelId, currentUserId, currentTeamId, profilesInCurrentChannel, autocompleteUsers}) {
+    constructor({currentChannelId, currentUserId, currentTeamId, profilesInChannel, autocompleteUsers}) {
         super();
 
         this.currentChannelId = currentChannelId;
         this.currentUserId = currentUserId;
         this.currentTeamId = currentTeamId;
-        this.profilesInCurrentChannel = profilesInCurrentChannel;
+        this.profilesInChannel = profilesInChannel;
         this.autocompleteUsers = autocompleteUsers;
     }
 
@@ -63,7 +63,7 @@ export default class AtMentionProvider extends Provider {
         // Attempt to match against local results first, capping at 25. The profiles are already
         // sorted by username, matching the server behaviour and remote results to arrive below.
         const prefixLower = prefix.toLowerCase();
-        const localMembers = this.profilesInCurrentChannel.
+        const localMembers = this.profilesInChannel.
             filter((item) => item.id !== this.currentUserId).
             filter((item) =>
                 (item.username && item.username.toLowerCase().startsWith(prefixLower)) ||
@@ -99,7 +99,7 @@ export default class AtMentionProvider extends Provider {
         ), 0);
 
         // Query the server for remote results to add to the local results extracted above.
-        this.autocompleteUsers(prefix, this.currentTeamId, this.currentChannelId).then((data) => {
+        this.autocompleteUsers(prefix, this.currentTeamId, this.currentChannelId).then(({data}) => {
             if (this.shouldCancelDispatch(prefix)) {
                 return;
             }

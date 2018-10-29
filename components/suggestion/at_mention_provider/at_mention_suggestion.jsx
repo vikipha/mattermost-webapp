@@ -2,14 +2,13 @@
 // See LICENSE.txt for license information.
 
 import React from 'react';
-
 import {FormattedMessage} from 'react-intl';
 
 import * as Utils from 'utils/utils.jsx';
 
 import Suggestion from '../suggestion.jsx';
 
-export class AtMentionSuggestion extends Suggestion {
+export default class AtMentionSuggestion extends Suggestion {
     render() {
         const isSelection = this.props.isSelection;
         const user = this.props.item;
