@@ -171,7 +171,11 @@ export default class Textbox extends React.Component {
     }
 
     UNSAFE_componentWillReceiveProps(nextProps) { // eslint-disable-line camelcase
-        if (nextProps.channelId !== this.props.channelId) {
+        if (nextProps.channelId !== this.props.channelId ||
+            nextProps.currentTeamId !== this.props.currentTeamId ||
+            nextProps.currentUserId !== this.props.currentUserId ||
+            nextProps.profilesInChannel !== this.props.profilesInChannel ||
+            nextProps.autocompleteUsers !== this.props.autocompleteUsers) {
             // Update channel id for AtMentionProvider.
             const providers = this.suggestionProviders;
             for (let i = 0; i < providers.length; i++) {
@@ -182,7 +186,7 @@ export default class Textbox extends React.Component {
                         currentUserId: nextProps.currentUserId,
                         profilesInChannel: nextProps.profilesInChannel,
                         autocompleteUsers: nextProps.actions.autocompleteUsers,
-                    );
+                    });
                 }
             }
         }

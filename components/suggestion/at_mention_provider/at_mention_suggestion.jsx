@@ -4,7 +4,7 @@
 import {FormattedMessage} from 'react-intl';
 import * as Utils from 'utils/utils.jsx';
 
-import Suggestion from './suggestion.jsx';
+import Suggestion from '../suggestion.jsx';
 
 export class AtMentionSuggestion extends Suggestion {
     render() {

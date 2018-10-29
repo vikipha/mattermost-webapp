@@ -23,7 +23,26 @@ export default class AtMentionProvider extends Provider {
         this.autocompleteUsers = autocompleteUsers;
     }
 
-    handlePretextChanged(suggestionId, pretext) {
+    updateMatches(suggestionId, prefix, users) {
+        const mentions = users.map((user) => {
+            if (user.username) {
+                return '@' + user.username;
+            } else {
+                return '';
+            }
+        });
+
+        AppDispatcher.handleServerAction({
+            type: ActionTypes.SUGGESTION_RECEIVED_SUGGESTIONS,
+            id: suggestionId,
+            matchedPretext: `@${prefix}`,
+            terms: mentions,
+            items: users,
+            component: AtMentionSuggestion,
+        });
+    }
+
+    handlePretextChanged = (suggestionId, pretext) => {
         const captured = XRegExp.cache('(?:^|\\W)@([\\pL\\d\\-_.]*)$', 'i').exec(pretext.toLowerCase());
         if (!captured) {
             return false;
@@ -35,6 +54,7 @@ export default class AtMentionProvider extends Provider {
 
         SuggestionStore.clearSuggestions(suggestionId);
 
+        // Attempt to match one of @here, @channel or @all.
         const specialMentions = ['here', 'channel', 'all'].filter((item) =>
             item.startsWith(prefix)
         ).map((name) => ({
@@ -42,6 +62,8 @@ export default class AtMentionProvider extends Provider {
             type: Constants.MENTION_SPECIAL,
         }));
 
+        // Attempt to match against local results first, capping at 25. The profiles are already
+        // sorted by username, matching the server behaviour and remote results to arrive below.
         const prefixLower = prefix.toLowerCase();
         const localMembers = this.profilesInCurrentChannel.
             filter((item) => item.id !== this.currentUserId).
@@ -57,34 +79,29 @@ export default class AtMentionProvider extends Provider {
             })).
             splice(0, 25);
 
+        // Build a dictionary to keep track of the local users for pairing up with the remote
+        // results below.
         const localUserIds = {};
         localMembers.forEach((item) => {
             localUserIds[item.id] = true;
         });
 
+        // Add a loading indicator in the dropdown given that more results are on their way.
         const loadingUsers = [{
             type: Constants.MENTION_MORE_MEMBERS,
             loading: true,
         }];
-        const loadingMentions = [''];
 
-        const members = specialMentions.concat(localMembers).concat(loadingUsers);
-        const userMentions = specialMentions.concat(localMembers).map((item) => '@' + item.username).concat(loadingMentions);
-
-        setTimeout(() => AppDispatcher.handleServerAction({
-            type: ActionTypes.SUGGESTION_RECEIVED_SUGGESTIONS,
-            id: suggestionId,
-            matchedPretext: `@${captured[1]}`,
-            terms: userMentions,
-            items: members,
-            component: AtMentionSuggestion,
-        }), 0);
-
-        this.autocompleteUsers(
+        // Piece everything together for the suggestion store. Do this asynchronously given the
+        // flux store and the need to avoid dispatching within a dispatch.
+        setTimeout(() => this.updateMatches(
+            suggestionId,
             prefix,
-            this.currentTeamId,
-            this.currentChannelId
-        ).then((data) => {
+            specialMentions.concat(localMembers).concat(loadingUsers)
+        ), 0);
+
+        // Query the server for remote results to add to the local results extracted above.
+        this.autocompleteUsers(prefix, this.currentTeamId, this.currentChannelId).then((data) => {
             if (this.shouldCancelDispatch(prefix)) {
                 return;
             }
@@ -92,6 +109,8 @@ export default class AtMentionProvider extends Provider {
                 return;
             }
 
+            // Filter remote users, removing the local users already found above and any mention
+            // of the current user.
             const remoteMembers = (data.users || []).map((user) => ({
                 type: Constants.MENTION_MEMBERS,
                 ...user,
@@ -101,28 +120,26 @@ export default class AtMentionProvider extends Provider {
                 user.id !== this.currentUserId
             );
 
-            const members = localMembers.concat(remoteMembers).sort((a, b) =>
+            // Merge the local and remote results for users in the channel, as we replace
+            // everything in the suggestion store.
+            const localAndRemoteMembers = localMembers.concat(remoteMembers).sort((a, b) =>
                 a.username.localeCompare(b.username)
             );
 
+            // The server also gives us users not in the channel. Note that we opted not to fetch
+            // these results locally as its more likely to want to engage with someone in the
+            // current context.
             const remoteNonMembers = (data.out_of_channel || []).map((user) => ({
                 type: Constants.MENTION_NONMEMBERS,
                 ...user,
             }));
 
-            const users = specialMentions.
-                concat(members).
-                concat(remoteNonMembers);
-            const mentions = users.map((user) => '@' + user.username);
-
-            AppDispatcher.handleServerAction({
-                type: ActionTypes.SUGGESTION_RECEIVED_SUGGESTIONS,
-                id: suggestionId,
-                matchedPretext: `@${captured[1]}`,
-                terms: mentions,
-                items: users,
-                component: AtMentionSuggestion,
-            });
+            // Piece everything together for the suggestion store.
+            this.updateMatches(
+                suggestionId,
+                prefix,
+                specialMentions.concat(localAndRemoteMembers).concat(remoteNonMembers)
+            );
         });
 
         return true;
