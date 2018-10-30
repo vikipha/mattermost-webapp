@@ -4,7 +4,7 @@
 import React from 'react';
 import {shallow} from 'enzyme';
 
-import Textbox from 'components/textbox';
+import Textbox from 'components/textbox/textbox.js';
 
 describe('components/TextBox', () => {
     test('should match snapshot with required props', () => {
