@@ -14,7 +14,7 @@ exports[`components/CreateComment should match snapshot read only channel 1`] = 
       <div
         className="post-body__cell"
       >
-        <Textbox
+        <Connect(Textbox)
           channelId="g6139tbospd18cmxroesdk3kkc"
           characterLimit={4000}
           createMessage="This channel is read-only. Only members with permission can post here."
@@ -29,7 +29,6 @@ exports[`components/CreateComment should match snapshot read only channel 1`] = 
           onKeyDown={[Function]}
           onKeyPress={[Function]}
           popoverMentionKeyClick={true}
-          supportsCommands={true}
           value=""
         />
         <span
@@ -105,7 +104,7 @@ exports[`components/CreateComment should match snapshot, comment with message 1`
       <div
         className="post-body__cell"
       >
-        <Textbox
+        <Connect(Textbox)
           channelId="g6139tbospd18cmxroesdk3kkc"
           characterLimit={4000}
           createMessage="Add a comment..."
@@ -120,7 +119,6 @@ exports[`components/CreateComment should match snapshot, comment with message 1`
           onKeyDown={[Function]}
           onKeyPress={[Function]}
           popoverMentionKeyClick={true}
-          supportsCommands={true}
           value="Test message"
         />
         <span
@@ -231,7 +229,7 @@ exports[`components/CreateComment should match snapshot, emoji picker disabled 1
       <div
         className="post-body__cell"
       >
-        <Textbox
+        <Connect(Textbox)
           channelId="g6139tbospd18cmxroesdk3kkc"
           characterLimit={4000}
           createMessage="Add a comment..."
@@ -246,7 +244,6 @@ exports[`components/CreateComment should match snapshot, emoji picker disabled 1
           onKeyDown={[Function]}
           onKeyPress={[Function]}
           popoverMentionKeyClick={true}
-          supportsCommands={true}
           value="Test message"
         />
         <span
@@ -344,7 +341,7 @@ exports[`components/CreateComment should match snapshot, empty comment 1`] = `
       <div
         className="post-body__cell"
       >
-        <Textbox
+        <Connect(Textbox)
           channelId="g6139tbospd18cmxroesdk3kkc"
           characterLimit={4000}
           createMessage="Add a comment..."
@@ -359,7 +356,6 @@ exports[`components/CreateComment should match snapshot, empty comment 1`] = `
           onKeyDown={[Function]}
           onKeyPress={[Function]}
           popoverMentionKeyClick={true}
-          supportsCommands={true}
           value=""
         />
         <span
@@ -470,7 +466,7 @@ exports[`components/CreateComment should match snapshot, non-empty message and u
       <div
         className="post-body__cell"
       >
-        <Textbox
+        <Connect(Textbox)
           channelId="g6139tbospd18cmxroesdk3kkc"
           characterLimit={4000}
           createMessage="Add a comment..."
@@ -485,7 +481,6 @@ exports[`components/CreateComment should match snapshot, non-empty message and u
           onKeyDown={[Function]}
           onKeyPress={[Function]}
           popoverMentionKeyClick={true}
-          supportsCommands={true}
           value="Test message"
         />
         <span

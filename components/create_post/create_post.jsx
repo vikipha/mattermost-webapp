@@ -495,7 +495,9 @@ export default class CreatePost extends React.Component {
 
         if (allowSending) {
             e.persist();
-            this.refs.textbox.getWrappedInstance().blur();
+            if (this.refs.textbox) {
+                this.refs.textbox.getWrappedInstance().blur();
+            }
 
             if (withClosedCodeBlock && message) {
                 this.setState({message}, () => this.handleSubmit(e));
@@ -674,7 +676,11 @@ export default class CreatePost extends React.Component {
     }
 
     getFileUploadTarget = () => {
-        return this.refs.textbox.getWrappedInstance();
+        if (this.refs.textbox) {
+            return this.refs.textbox.getWrappedInstance();
+        }
+
+        return null;
     }
 
     getCreatePostControls = () => {

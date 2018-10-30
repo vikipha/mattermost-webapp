@@ -25,10 +25,20 @@ exports[`components/TextBox should match snapshot with required props 1`] = `
     providers={
       Array [
         AtMentionProvider {
-          "channelId": undefined,
+          "autocompleteUsersInChannel": [MockFunction],
+          "currentUserId": "currentUserId",
           "disableDispatches": false,
+          "handlePretextChanged": [Function],
           "latestComplete": true,
           "latestPrefix": "",
+          "profilesInChannel": Array [
+            Object {
+              "id": "id1",
+            },
+            Object {
+              "id": "id2",
+            },
+          ],
           "requestStarted": false,
         },
         ChannelMentionProvider {
@@ -158,10 +168,20 @@ exports[`components/TextBox should throw error when new property is too long 1`]
     providers={
       Array [
         AtMentionProvider {
-          "channelId": undefined,
+          "autocompleteUsersInChannel": [MockFunction],
+          "currentUserId": "currentUserId",
           "disableDispatches": false,
+          "handlePretextChanged": [Function],
           "latestComplete": true,
           "latestPrefix": "",
+          "profilesInChannel": Array [
+            Object {
+              "id": "id1",
+            },
+            Object {
+              "id": "id2",
+            },
+          ],
           "requestStarted": false,
         },
         ChannelMentionProvider {
@@ -291,10 +311,20 @@ exports[`components/TextBox should throw error when value is too long 1`] = `
     providers={
       Array [
         AtMentionProvider {
-          "channelId": undefined,
+          "autocompleteUsersInChannel": [MockFunction],
+          "currentUserId": "currentUserId",
           "disableDispatches": false,
+          "handlePretextChanged": [Function],
           "latestComplete": true,
           "latestPrefix": "",
+          "profilesInChannel": Array [
+            Object {
+              "id": "id1",
+            },
+            Object {
+              "id": "id2",
+            },
+          ],
           "requestStarted": false,
         },
         ChannelMentionProvider {

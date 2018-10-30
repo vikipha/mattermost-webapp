@@ -55,18 +55,16 @@ exports[`components/EditPostModal should match with default config 1`] = `
     bsClass="modal-body edit-modal-body"
     componentClass="div"
   >
-    <Textbox
+    <Connect(Textbox)
       channelId="5"
       characterLimit={4000}
       createMessage="Edit the post..."
       emojiEnabled={true}
       handlePostError={[Function]}
       id="edit_textbox"
-      isRHS={false}
       onChange={[Function]}
       onKeyDown={[Function]}
       onKeyPress={[Function]}
-      popoverMentionKeyClick={false}
       suggestionListStyle="bottom"
       supportsCommands={false}
       value=""
@@ -185,18 +183,16 @@ exports[`components/EditPostModal should match without emoji picker 1`] = `
     bsClass="modal-body edit-modal-body"
     componentClass="div"
   >
-    <Textbox
+    <Connect(Textbox)
       channelId="5"
       characterLimit={4000}
       createMessage="Edit the post..."
       emojiEnabled={false}
       handlePostError={[Function]}
       id="edit_textbox"
-      isRHS={false}
       onChange={[Function]}
       onKeyDown={[Function]}
       onKeyPress={[Function]}
-      popoverMentionKeyClick={false}
       suggestionListStyle="bottom"
       supportsCommands={false}
       value=""
@@ -293,18 +289,16 @@ exports[`components/EditPostModal should show emojis on emojis click 1`] = `
     bsClass="modal-body edit-modal-body"
     componentClass="div"
   >
-    <Textbox
+    <Connect(Textbox)
       channelId="5"
       characterLimit={4000}
       createMessage="Edit the post..."
       emojiEnabled={true}
       handlePostError={[Function]}
       id="edit_textbox"
-      isRHS={false}
       onChange={[Function]}
       onKeyDown={[Function]}
       onKeyPress={[Function]}
-      popoverMentionKeyClick={false}
       suggestionListStyle="bottom"
       supportsCommands={false}
       value=""
@@ -423,18 +417,16 @@ exports[`components/EditPostModal should show errors when it is set in the state
     bsClass="modal-body edit-modal-body"
     componentClass="div"
   >
-    <Textbox
+    <Connect(Textbox)
       channelId="5"
       characterLimit={4000}
       createMessage="Edit the post..."
       emojiEnabled={true}
       handlePostError={[Function]}
       id="edit_textbox"
-      isRHS={false}
       onChange={[Function]}
       onKeyDown={[Function]}
       onKeyPress={[Function]}
-      popoverMentionKeyClick={false}
       suggestionListStyle="bottom"
       supportsCommands={false}
       value=""
