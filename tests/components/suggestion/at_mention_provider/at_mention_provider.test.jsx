@@ -45,7 +45,7 @@ describe('components/suggestion/at_mention_provider/AtMentionProvider', function
         const params = {
             ...baseParams,
             autocompleteUsersInChannel: jest.fn().mockImplementation(() => new Promise((resolve) => {
-                setTimeout(() => resolve({data:{
+                setTimeout(() => resolve({data: {
                     users: [
                         {id: 'userid4', username: 'user4', first_name: 'X', last_name: 'Y', nickname: 'Z'},
                     ],
@@ -199,7 +199,7 @@ describe('components/suggestion/at_mention_provider/AtMentionProvider', function
         const params = {
             ...baseParams,
             autocompleteUsersInChannel: jest.fn().mockImplementation(() => new Promise((resolve) => {
-                setTimeout(() => resolve({data:{
+                setTimeout(() => resolve({data: {
                     users: [],
                     out_of_channel: [],
                 }}), 0);
@@ -257,7 +257,7 @@ describe('components/suggestion/at_mention_provider/AtMentionProvider', function
         const params = {
             ...baseParams,
             autocompleteUsersInChannel: jest.fn().mockImplementation(() => new Promise((resolve) => {
-                setTimeout(() => resolve({data:{
+                setTimeout(() => resolve({data: {
                     users: [
                         {id: 'userid4', username: 'user4', first_name: 'X', last_name: 'Y', nickname: 'Z'},
                     ],
@@ -345,7 +345,7 @@ describe('components/suggestion/at_mention_provider/AtMentionProvider', function
         const params = {
             ...baseParams,
             autocompleteUsersInChannel: jest.fn().mockImplementation(() => new Promise((resolve) => {
-                setTimeout(() => resolve({data:{
+                setTimeout(() => resolve({data: {
                     users: [
                         {id: 'userid4', username: 'user4', first_name: 'X', last_name: 'Y', nickname: 'Z'},
                     ],
@@ -422,7 +422,7 @@ describe('components/suggestion/at_mention_provider/AtMentionProvider', function
         const params = {
             ...baseParams,
             autocompleteUsersInChannel: jest.fn().mockImplementation(() => new Promise((resolve) => {
-                setTimeout(() => resolve({data:{
+                setTimeout(() => resolve({data: {
                     users: [
                         {id: 'userid4', username: 'user4', first_name: 'X', last_name: 'Y', nickname: 'Z'},
                     ],
@@ -499,7 +499,7 @@ describe('components/suggestion/at_mention_provider/AtMentionProvider', function
         const params = {
             ...baseParams,
             autocompleteUsersInChannel: jest.fn().mockImplementation(() => new Promise((resolve) => {
-                setTimeout(() => resolve({data:{
+                setTimeout(() => resolve({data: {
                     users: [
                         {id: 'userid4', username: 'user4', first_name: 'X', last_name: 'Y', nickname: 'Z'},
                     ],
@@ -594,7 +594,7 @@ describe('components/suggestion/at_mention_provider/AtMentionProvider', function
         const params = {
             ...baseParams,
             autocompleteUsersInChannel: jest.fn().mockImplementation(() => new Promise((resolve) => {
-                setTimeout(() => resolve({data:{
+                setTimeout(() => resolve({data: {
                     users: [
                         {id: 'userid4', username: 'user4', first_name: 'X', last_name: 'Y', nickname: 'Z'},
                     ],
