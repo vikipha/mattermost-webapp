@@ -11,7 +11,14 @@ import Constants from 'utils/constants.jsx';
 import * as Utils from 'utils/utils.jsx';
 import {emitUserLoggedOutEvent} from 'actions/global_actions.jsx';
 
-export default class OAuthToEmail extends React.Component {
+export default class OAuthToEmail extends React.PureComponent {
+    static propTypes = {
+        currentType: PropTypes.string,
+        email: PropTypes.string,
+        siteName: PropTypes.string,
+        passwordConfig: PropTypes.object,
+    };
+
     constructor(props) {
         super(props);
 
@@ -137,10 +144,3 @@ export default class OAuthToEmail extends React.Component {
         );
     }
 }
-
-OAuthToEmail.propTypes = {
-    currentType: PropTypes.string,
-    email: PropTypes.string,
-    siteName: PropTypes.string,
-    passwordConfig: PropTypes.object,
-};
